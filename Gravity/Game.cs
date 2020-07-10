@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Gravity
 {
-    public class Game1 : Game
+    public class Game : Microsoft.Xna.Framework.Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        public Game()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -42,7 +42,7 @@ namespace Gravity
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color { R = 63, G = 63, B = 63, A = 255 });
 
             // TODO: Add your drawing code here
 
