@@ -17,8 +17,20 @@ namespace Gravity
             window.SetKeyRepeatEnabled(false);
 
             window.Closed += (_, __) => window.Close();
-            
+
+            window.KeyPressed += (_, keyArgs) =>
+            {
+                if (keyArgs.Code == Keyboard.Key.Escape)
+                {
+                    window.Close();
+                }
+            };
+
             var character = new Character();
+
+            character.Movement.Position = new Vector2f(64, 64);
+
+            var level = new Level();
 
             var t1 = DateTime.Now;
             while (window.IsOpen)
@@ -28,8 +40,9 @@ namespace Gravity
                 t1 = t2;
 
                 window.DispatchEvents();
-                window.Clear(new Color(63, 63, 63));
+                window.Clear(Color.Black);
                 character.Update(elapsedTime);
+                window.Draw(level);
                 window.Draw(character);
                 window.Display();
             }
