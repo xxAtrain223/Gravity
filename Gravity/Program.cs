@@ -11,7 +11,7 @@ namespace Gravity
     {
         static void Main(string[] args)
         {
-            var window = new RenderWindow(new VideoMode(800, 600), "Gravity");
+            var window = new RenderWindow(new VideoMode(1920, 1080), "Gravity");
 
             window.SetVerticalSyncEnabled(true);
             window.SetKeyRepeatEnabled(false);

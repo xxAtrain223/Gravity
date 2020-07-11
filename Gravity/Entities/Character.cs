@@ -23,11 +23,13 @@ namespace Gravity.Entities
             {
                 FillColor = new Color(255, 140, 0)
             };
+
+            Movement.MaxVelocity = 10;
         }
 
         public void Update(TimeSpan elapsedTime)
         {
-            double accelerationScale = 1;
+            double accelerationScale = 2.5;
             Vector2f accelerationInput = new Vector2f(0, 0);
             bool inputReceived = false;
 
