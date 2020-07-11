@@ -28,8 +28,6 @@ namespace Gravity.Components
                 Velocity = normalizedVelocity.Scale(MaxVelocity);
             }
 
-            Console.WriteLine(Velocity.Length());
-
             Position += Velocity;
         }
     }

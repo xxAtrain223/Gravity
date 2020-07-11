@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 using Gravity.Entities;
 using SFML.Graphics;
@@ -11,7 +12,7 @@ namespace Gravity
     {
         static void Main(string[] args)
         {
-            var window = new RenderWindow(new VideoMode(1920, 1080), "Gravity");
+            var window = new RenderWindow(new VideoMode(1280, 720), "Gravity");
 
             window.SetVerticalSyncEnabled(true);
             window.SetKeyRepeatEnabled(false);
@@ -26,11 +27,13 @@ namespace Gravity
                 }
             };
 
+            List<object> globalEntities = new List<object>();
+
             var character = new Character();
-
             character.Movement.Position = new Vector2f(64, 64);
+            globalEntities.Add(character);
 
-            var level = new Level();
+            var level = new Level(globalEntities);
 
             var t1 = DateTime.Now;
             while (window.IsOpen)
@@ -42,6 +45,7 @@ namespace Gravity
                 window.DispatchEvents();
                 window.Clear(Color.Black);
                 character.Update(elapsedTime);
+                level.Update(elapsedTime);
                 window.Draw(level);
                 window.Draw(character);
                 window.Display();
