@@ -11,9 +11,10 @@ namespace Gravity.Entities
     {
         private RectangleShape DoorBack;
         private RectangleShape DoorStripe;
-        public bool Closed { get; set; } = true;
+        private bool Invert;
+        public bool Closed { get; private set; }
 
-        public Door(Vector2f position, float rotation, Color color)
+        public Door(Vector2f position, float rotation, Color color, bool invert)
         {
             DoorBack = new RectangleShape(new Vector2f(32, 128));
             DoorBack.Origin = new Vector2f(16, 64);
@@ -26,6 +27,8 @@ namespace Gravity.Entities
             DoorStripe.Position = position;
             DoorStripe.Rotation = rotation;
             DoorStripe.FillColor = color;
+            Invert = invert;
+            Closed = !invert;
         }
 
         public void Draw(RenderTarget target, RenderStates states)
@@ -35,6 +38,11 @@ namespace Gravity.Entities
                 target.Draw(DoorBack);
                 target.Draw(DoorStripe);
             }
+        }
+
+        public void Activate(bool activated)
+        {
+            Closed = !(activated ^ Invert);
         }
 
         public FloatRect GetBoundingBox()

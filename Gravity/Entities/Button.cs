@@ -31,8 +31,13 @@ namespace Gravity.Entities
                 if (value == true)
                 {
                     ButtonTop.Size = new Vector2f(32, 8);
-                    Door.Closed = false;
+                    Door.Activate(true);
                     RemainingTime = PushTime;
+                }
+                else
+                {
+                    ButtonTop.Size = new Vector2f(32, 16);
+                    Door.Activate(false);
                 }
             }
         }
@@ -63,7 +68,6 @@ namespace Gravity.Entities
                 if (PushTime > TimeSpan.Zero && RemainingTime <= TimeSpan.Zero)
                 {
                     Pushed = false;
-                    Door.Closed = true;
                 }
             }
         }

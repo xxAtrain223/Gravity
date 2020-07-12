@@ -104,7 +104,8 @@ namespace Gravity
                     "Door" => new Door(
                         new Vector2f(entity.Position[0], entity.Position[1]),
                         entity.Rotation,
-                        new RGB(entity.Data.GetProperty("Color").GetString())),
+                        new RGB(entity.Data.GetProperty("Color").GetString()),
+                        entity.Data.GetProperty("Invert").GetBoolean()),
                     "Button" => new Button(
                         new Vector2f(entity.Position[0], entity.Position[1]),
                         entity.Rotation,

@@ -6,7 +6,8 @@
             "Position": [ 640, 176 ],
             "Rotation": 90,
             "Data": {
-                "Color": "00BF00FF"
+                "Color": "00BF00FF",
+                "Invert": false
             }
         },
         {
@@ -15,7 +16,7 @@
             "Rotation": -90,
             "Data": {
                 "Color": "00BF00FF",
-                "Time": 0.0
+                "Time": 2.0
             }
         }
     ],
