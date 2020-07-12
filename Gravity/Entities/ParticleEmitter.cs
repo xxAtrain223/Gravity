@@ -52,8 +52,7 @@ namespace Gravity.Entities
                 Particles.Add(new Particle(shape, TimeSpan.FromSeconds(1), position, PlayerMovement.Velocity));
 
                 TimeToSpawn = EmitTime * (2 - PlayerMovement.Velocity.Length() / PlayerMovement.MaxVelocity);
-                Console.WriteLine(TimeToSpawn);
-                TimeToSpawn += TimeToSpawn * (RandomOffset * Random.NextDouble());
+                TimeToSpawn += TimeToSpawn * (RandomOffset * (Random.NextDouble() - .5));
             }
         }
 

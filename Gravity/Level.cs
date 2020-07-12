@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Linq;
+using System.Reflection.Metadata;
+using Gravity.Utilities.ColorUtilities;
 
 namespace Gravity
 {
@@ -27,12 +29,28 @@ namespace Gravity
 
         private IEnumerable<object> GlobalEntities;
 
+        private IList<object> LocalEntities;
+
         public Vector2f SpawnPoint { get; }
+
+        private class Entity
+        {
+            public string Type { get; set; }
+
+            public float[] Position { get; set; }
+
+            public float Rotation { get; set; }
+
+            public string Data { get; set; }
+        }
 
         private class LevelJson
         {
             public TileType[][] Tiles { get; set; }
+            
             public float[] SpawnPoint { get; set; }
+
+            public Entity[] Entities { get; set; }
         }
 
         public Level(IEnumerable<object> globalEntities, string fileName)
@@ -73,6 +91,23 @@ namespace Gravity
             Sprite = new Sprite(renderTexture.Texture);
 
             SpawnPoint = new Vector2f(levelJson.SpawnPoint[0], levelJson.SpawnPoint[1]);
+
+            LocalEntities = new List<object>();
+            foreach (var entity in levelJson.Entities)
+            {
+                object newEntity = entity.Type switch
+                {
+                    "Door" => new Door(
+                        new Vector2f(entity.Position[0], entity.Position[1]),
+                        entity.Rotation,
+                        new RGB(entity.Data)),
+                    _ => throw new Exception($"Type \"{entity.Type}\" is not valid")
+                };
+
+                LocalEntities.Add(newEntity);
+            }
+
+            //LocalEntities.Add(new Door(new Vector2f(640, 176), 90, new Color(0, 191, 0)));
         }
 
         public void Update(TimeSpan elapsedTime)
@@ -87,6 +122,28 @@ namespace Gravity
                         collidable.OnWallCollide(wallOverlap.Value);
                         wallOverlap = GetWallOverlap(collidable);
                     }
+
+                    foreach (var localEntity in LocalEntities)
+                    {
+                        if (localEntity is Door door)
+                        {
+                            var doorBoundingBox = door.GetBoundingBox();
+                            var collidableBoundingBox = collidable.GetBoundingBox();
+
+                            if (doorBoundingBox.Intersects(collidableBoundingBox))
+                            {
+                                collidable.OnWallCollide(doorBoundingBox);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var entity in LocalEntities)
+            {
+                if (entity is IUpdatable updatable)
+                {
+                    updatable.Update(elapsedTime);
                 }
             }
         }
@@ -94,6 +151,13 @@ namespace Gravity
         public void Draw(RenderTarget target, RenderStates states)
         {
             target.Draw(Sprite);
+            foreach (var entity in LocalEntities)
+            {
+                if (entity is Drawable drawable)
+                {
+                    target.Draw(drawable);
+                }
+            }
         }
 
         public static Color TileTypeToColor(TileType tile) =>

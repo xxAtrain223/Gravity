@@ -110,6 +110,14 @@ namespace Gravity.Utilities.ColorUtilities
             return new HSL(this);
         }
         public static implicit operator HSL(RGB rgb) => rgb.ToHSL();
+
+        public RGB(string hex)
+        {
+            R = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            G = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            B = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+            A = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+        }
     }
 
     public struct HSV
