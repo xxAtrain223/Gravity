@@ -26,12 +26,13 @@ namespace Gravity.Entities
         private Color Blue = new Color(1, 159, 232);
         private Color Yellow = new Color(248, 180, 2);
 
-        public Character(View view)
+        public Character(View view, Vector2f spawnPoint)
         {
             Rectangle = new RectangleShape(new Vector2f(64, 64));
             Rectangle.FillColor = Color.White;
 
             Movement.MaxVelocity = 10;
+            Movement.Position = spawnPoint;
 
             ParticleEmitter = new ParticleEmitter
             {

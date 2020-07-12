@@ -37,7 +37,12 @@ namespace Gravity.Components
 
             double distance = (PlayerMovement.Position - Position).Length();
             double followRate = distance * 3;
-            Position += (PlayerMovement.Position - Position).Normalize().Scale(followRate * elapsedTime.TotalSeconds);
+            var move = (PlayerMovement.Position - Position);
+            if (move.X != 0 || move.Y != 0)
+            {
+                move = move.Normalize().Scale(followRate * elapsedTime.TotalSeconds);
+            }
+            Position += move;
 
             View.Size = WindowSize.Scale(Zoom);
             View.Center = Position;

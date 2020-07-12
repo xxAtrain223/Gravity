@@ -6,6 +6,7 @@ using Gravity.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Linq;
 
 namespace Gravity
 {
@@ -26,9 +27,12 @@ namespace Gravity
 
         private IEnumerable<object> GlobalEntities;
 
+        public Vector2f SpawnPoint { get; }
+
         private class LevelJson
         {
             public TileType[][] Tiles { get; set; }
+            public float[] SpawnPoint { get; set; }
         }
 
         public Level(IEnumerable<object> globalEntities, string fileName)
@@ -67,6 +71,8 @@ namespace Gravity
             }
             renderTexture.Display();
             Sprite = new Sprite(renderTexture.Texture);
+
+            SpawnPoint = new Vector2f(levelJson.SpawnPoint[0], levelJson.SpawnPoint[1]);
         }
 
         public void Update(TimeSpan elapsedTime)

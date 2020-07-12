@@ -21,7 +21,7 @@ namespace Gravity.Entities
 
         public TimeSpan EmitTime { get; set; } = TimeSpan.FromSeconds(0.01);
 
-        public TimeSpan RandomOffset { get; set; } = TimeSpan.FromSeconds(0.005);
+        public float RandomOffset { get; set; } = 0.5f;
 
         private TimeSpan TimeToSpawn = TimeSpan.Zero;
 
@@ -42,7 +42,7 @@ namespace Gravity.Entities
 
             if (TimeToSpawn <= TimeSpan.Zero)
             {
-                var position = PlayerMovement.Position + new Vector2f((float)Random.NextDouble() - 0.5f, (float)Random.NextDouble() - 0.5f).Normalize().Scale(Random.Next(28));
+                var position = PlayerMovement.Position + new Vector2f((float)Random.NextDouble() - 0.5f, (float)Random.NextDouble() - 0.5f).Normalize().Scale(Random.Next(25));
                 var shape = new CircleShape(5, Shape)
                 {
                     FillColor = Color,
@@ -51,7 +51,9 @@ namespace Gravity.Entities
                 };
                 Particles.Add(new Particle(shape, TimeSpan.FromSeconds(1), position, PlayerMovement.Velocity));
 
-                TimeToSpawn = EmitTime + RandomOffset * Random.NextDouble();
+                TimeToSpawn = EmitTime * (2 - PlayerMovement.Velocity.Length() / PlayerMovement.MaxVelocity);
+                Console.WriteLine(TimeToSpawn);
+                TimeToSpawn += TimeToSpawn * (RandomOffset * Random.NextDouble());
             }
         }
 

@@ -29,11 +29,10 @@ namespace Gravity
 
             List<object> globalEntities = new List<object>();
 
-            var character = new Character(window.GetView());
-            character.Movement.Position = new Vector2f(64, 64);
-            globalEntities.Add(character);
-
             var level = new Level(globalEntities, @"Content/Levels/Windows.json");
+
+            var character = new Character(window.GetView(), level.SpawnPoint);
+            globalEntities.Add(character);
 
             var t1 = DateTime.Now;
             while (window.IsOpen)
