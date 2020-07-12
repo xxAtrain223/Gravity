@@ -17,12 +17,19 @@ namespace Gravity.Entities
 
         private RectangleShape Rectangle;
 
+        private ParticleEmitter ParticleEmitter;
+
         public Character()
         {
             Rectangle = new RectangleShape(new Vector2f(64, 64));
             Rectangle.FillColor = new Color(255, 140, 0);
 
             Movement.MaxVelocity = 10;
+
+            ParticleEmitter = new ParticleEmitter
+            {
+                Color = Rectangle.FillColor
+            };
         }
 
         public void Update(TimeSpan elapsedTime)
@@ -59,10 +66,15 @@ namespace Gravity.Entities
             }
 
             Movement.Update(Acceleration, elapsedTime);
+            ParticleEmitter.Position = Movement.Position;
+            ParticleEmitter.Velocity = Movement.Velocity;
+            ParticleEmitter.Update(elapsedTime);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
         {
+            target.Draw(ParticleEmitter);
+
             Rectangle.Position = Movement.Position - Rectangle.Size / 2;
             target.Draw(Rectangle);
         }
