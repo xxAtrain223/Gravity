@@ -79,6 +79,7 @@ namespace Gravity.Entities
             Movement.Update(Acceleration, elapsedTime);
             ParticleEmitter.Update(elapsedTime);
             Camera.Update(elapsedTime);
+            Console.WriteLine($"{Movement.Position.X:.0} {Movement.Position.Y:.0}");
         }
 
         public void Draw(RenderTarget target, RenderStates states)
