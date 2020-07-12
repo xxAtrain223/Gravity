@@ -30,7 +30,7 @@ namespace Gravity
             GlobalEntities = globalEntities;
 
             TileSize = new Vector2u(32, 32);
-            Tiles = new TileType[22, 40];
+            Tiles = new TileType[200, 200];
 
             uint TileLength0 = (uint)Tiles.GetLength(0);
             uint TileLength1 = (uint)Tiles.GetLength(1);
@@ -38,11 +38,7 @@ namespace Gravity
             {
                 for (uint j = 0; j < TileLength1; j++)
                 {
-                    /*if (i > TileLength0 / 2 && j < TileLength1 / 2)
-                    {
-                        Tiles[i, j] = TileType.Void;
-                    }
-                    else*/ if (i == 0 || i == (TileLength0 - 1) ||
+                    if (i == 0 || i == (TileLength0 - 1) ||
                         j == 0 || j == (TileLength1 - 1))
                     {
                         Tiles[i, j] = TileType.Wall;

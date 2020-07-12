@@ -19,17 +19,22 @@ namespace Gravity.Entities
 
         private ParticleEmitter ParticleEmitter;
 
-        public Character()
+        public Camera Camera;
+
+        public Character(View view)
         {
             Rectangle = new RectangleShape(new Vector2f(64, 64));
-            Rectangle.FillColor = new Color(255, 140, 0);
+            Rectangle.FillColor = Color.White; //new Color(255, 140, 0);
 
             Movement.MaxVelocity = 10;
 
             ParticleEmitter = new ParticleEmitter
             {
-                Color = Rectangle.FillColor
+                Color = Rectangle.FillColor,
+                PlayerMovement = Movement
             };
+
+            Camera = new Camera(view, Movement);
         }
 
         public void Update(TimeSpan elapsedTime)
@@ -66,9 +71,8 @@ namespace Gravity.Entities
             }
 
             Movement.Update(Acceleration, elapsedTime);
-            ParticleEmitter.Position = Movement.Position;
-            ParticleEmitter.Velocity = Movement.Velocity;
             ParticleEmitter.Update(elapsedTime);
+            Camera.Update(elapsedTime);
         }
 
         public void Draw(RenderTarget target, RenderStates states)

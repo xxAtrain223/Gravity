@@ -29,7 +29,7 @@ namespace Gravity
 
             List<object> globalEntities = new List<object>();
 
-            var character = new Character();
+            var character = new Character(window.GetView());
             character.Movement.Position = new Vector2f(64, 64);
             globalEntities.Add(character);
 
@@ -43,9 +43,12 @@ namespace Gravity
                 t1 = t2;
 
                 window.DispatchEvents();
-                window.Clear(Color.Black);
+
                 character.Update(elapsedTime);
                 level.Update(elapsedTime);
+
+                window.Clear(Color.Black);
+                window.SetView(character.Camera.View);
                 window.Draw(level);
                 window.Draw(character);
                 window.Display();

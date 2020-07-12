@@ -25,9 +25,7 @@ namespace Gravity.Entities
 
         private TimeSpan TimeToSpawn = TimeSpan.Zero;
 
-        public Vector2f Position { get; set; } = new Vector2f(0, 0);
-
-        public Vector2f Velocity { get; set; } = new Vector2f(0, 0);
+        public Movement PlayerMovement { get; set; }
 
         public void Update(TimeSpan elapsedTime)
         {
@@ -44,14 +42,14 @@ namespace Gravity.Entities
 
             if (TimeToSpawn <= TimeSpan.Zero)
             {
-                var position = Position + new Vector2f((float)Random.NextDouble() - 0.5f, (float)Random.NextDouble() - 0.5f).Normalize().Scale(Random.Next(28));
-                var shape = new CircleShape(2, Shape)
+                var position = PlayerMovement.Position + new Vector2f((float)Random.NextDouble() - 0.5f, (float)Random.NextDouble() - 0.5f).Normalize().Scale(Random.Next(28));
+                var shape = new CircleShape(5, Shape)
                 {
                     FillColor = Color,
                     Rotation = Random.Next(-360 / (int)Shape / 2, 360 / (int)Shape / 2),
                     Position = position
                 };
-                Particles.Add(new Particle(shape, TimeSpan.FromSeconds(1), position, Velocity));
+                Particles.Add(new Particle(shape, TimeSpan.FromSeconds(1), position, PlayerMovement.Velocity));
 
                 TimeToSpawn = EmitTime + RandomOffset * Random.NextDouble();
             }
