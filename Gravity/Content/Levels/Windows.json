@@ -5,7 +5,18 @@
             "Type": "Door",
             "Position": [ 640, 176 ],
             "Rotation": 90,
-            "Data": "00BF00FF"
+            "Data": {
+                "Color": "00BF00FF"
+            }
+        },
+        {
+            "Type": "Button",
+            "Position": [ 576, 544 ],
+            "Rotation": -90,
+            "Data": {
+                "Color": "00BF00FF",
+                "Time": 0.0
+            }
         }
     ],
     "Tiles": [

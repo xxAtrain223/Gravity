@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Gravity.Entities
 {
-    public class Door : Drawable, IUpdatable
+    public class Door : Drawable
     {
         private RectangleShape DoorBack;
         private RectangleShape DoorStripe;
-        public bool Closed = true;
+        public bool Closed { get; set; } = true;
 
         public Door(Vector2f position, float rotation, Color color)
         {
@@ -26,11 +26,6 @@ namespace Gravity.Entities
             DoorStripe.Position = position;
             DoorStripe.Rotation = rotation;
             DoorStripe.FillColor = color;
-        }
-
-        public void Update(TimeSpan elapsedTime)
-        {
-            //throw new NotImplementedException();
         }
 
         public void Draw(RenderTarget target, RenderStates states)

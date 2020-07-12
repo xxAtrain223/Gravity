@@ -31,6 +31,8 @@ namespace Gravity
 
         private IList<object> LocalEntities;
 
+        private IDictionary<string, Door> Doors;
+
         public Vector2f SpawnPoint { get; }
 
         private class Entity
@@ -41,7 +43,7 @@ namespace Gravity
 
             public float Rotation { get; set; }
 
-            public string Data { get; set; }
+            public JsonElement Data { get; set; }
         }
 
         private class LevelJson
@@ -92,6 +94,8 @@ namespace Gravity
 
             SpawnPoint = new Vector2f(levelJson.SpawnPoint[0], levelJson.SpawnPoint[1]);
 
+            Doors = new Dictionary<string, Door>();
+
             LocalEntities = new List<object>();
             foreach (var entity in levelJson.Entities)
             {
@@ -100,9 +104,20 @@ namespace Gravity
                     "Door" => new Door(
                         new Vector2f(entity.Position[0], entity.Position[1]),
                         entity.Rotation,
-                        new RGB(entity.Data)),
+                        new RGB(entity.Data.GetProperty("Color").GetString())),
+                    "Button" => new Button(
+                        new Vector2f(entity.Position[0], entity.Position[1]),
+                        entity.Rotation,
+                        new RGB(entity.Data.GetProperty("Color").GetString()),
+                        Doors[entity.Data.GetProperty("Color").GetString()],
+                        TimeSpan.FromSeconds(entity.Data.GetProperty("Time").GetDouble())),
                     _ => throw new Exception($"Type \"{entity.Type}\" is not valid")
                 };
+
+                if (newEntity is Door door)
+                {
+                    Doors.Add(entity.Data.GetProperty("Color").GetString(), door);
+                }
 
                 LocalEntities.Add(newEntity);
             }
@@ -130,9 +145,19 @@ namespace Gravity
                             var doorBoundingBox = door.GetBoundingBox();
                             var collidableBoundingBox = collidable.GetBoundingBox();
 
-                            if (doorBoundingBox.Intersects(collidableBoundingBox))
+                            if (door.Closed == true && doorBoundingBox.Intersects(collidableBoundingBox))
                             {
                                 collidable.OnWallCollide(doorBoundingBox);
+                            }
+                        }
+                        else if (localEntity is Button button)
+                        {
+                            var buttonBoundingBox = button.GetBoundingBox();
+                            var collidableBoundingBox = collidable.GetBoundingBox();
+
+                            if (buttonBoundingBox.Intersects(collidableBoundingBox))
+                            {
+                                button.Pushed = true;
                             }
                         }
                     }
