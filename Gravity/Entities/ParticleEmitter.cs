@@ -15,9 +15,9 @@ namespace Gravity.Entities
 
         private Random Random = new Random();
 
-        public uint Shape { get; set; } = 3;
+        public uint Shape { get; set; } = 4;
 
-        public Color Color { get; set; } = new Color(255, 140, 0);
+        public Color Color { get; set; } = Color.White;
 
         public TimeSpan EmitTime { get; set; } = TimeSpan.FromSeconds(0.01);
 

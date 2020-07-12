@@ -21,10 +21,15 @@ namespace Gravity.Entities
 
         public Camera Camera;
 
+        private Color Red = new Color(237, 76, 35);
+        private Color Green = new Color(125, 180, 0);
+        private Color Blue = new Color(1, 159, 232);
+        private Color Yellow = new Color(248, 180, 2);
+
         public Character(View view)
         {
             Rectangle = new RectangleShape(new Vector2f(64, 64));
-            Rectangle.FillColor = Color.White; //new Color(255, 140, 0);
+            Rectangle.FillColor = Color.White;
 
             Movement.MaxVelocity = 10;
 
