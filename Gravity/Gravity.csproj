@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\Levels\Windows.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Levels\Windows.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SFML.Graphics" Version="2.5.0" />
   </ItemGroup>
 

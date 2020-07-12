@@ -33,7 +33,7 @@ namespace Gravity
             character.Movement.Position = new Vector2f(64, 64);
             globalEntities.Add(character);
 
-            var level = new Level(globalEntities);
+            var level = new Level(globalEntities, @"Content/Levels/Windows.json");
 
             var t1 = DateTime.Now;
             while (window.IsOpen)

@@ -95,35 +95,6 @@ namespace Gravity.Entities
 
         public void OnWallCollide(FloatRect wallTile)
         {
-            //FloatRect xBoundingBox = GetBoundingBox();
-            //FloatRect yBoundingBox = GetBoundingBox();
-            //Vector2f direction;
-            //if (Movement.Velocity.Length() > 1)
-            //{
-            //    direction = Movement.Velocity.Normalize();
-            //}
-            //else
-            //{
-            //    direction = Movement.Velocity;
-            //}
-            //while (true)
-            //{
-            //    xBoundingBox.Left -= direction.X;
-            //    if (!wallTile.Intersects(xBoundingBox))
-            //    {
-            //        Movement.Position = new Vector2f(xBoundingBox.Left + Rectangle.Size.X / 2, xBoundingBox.Top + Rectangle.Size.Y / 2);
-            //        Movement.Velocity = new Vector2f(0, Movement.Velocity.Y);
-            //        break;
-            //    }
-            //    yBoundingBox.Top -= direction.Y;
-            //    if (!wallTile.Intersects(yBoundingBox))
-            //    {
-            //        Movement.Position = new Vector2f(yBoundingBox.Left + Rectangle.Size.X / 2, yBoundingBox.Top + Rectangle.Size.Y / 2);
-            //        Movement.Velocity = new Vector2f(Movement.Velocity.X, 0);
-            //        break;
-            //    }
-            //}
-
             Movement.Position -= Movement.Velocity;
 
             var Velocity = Movement.Velocity;

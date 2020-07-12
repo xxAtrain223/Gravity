@@ -5,6 +5,7 @@ using System;
 using Gravity.Entities;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Gravity
 {
@@ -12,9 +13,9 @@ namespace Gravity
     {
         public enum TileType
         {
-            Void,
-            Wall,
-            Air
+            Void = 0,
+            Wall = 1,
+            Air = 2
         }
 
         private Vector2u TileSize;
@@ -25,12 +26,21 @@ namespace Gravity
 
         private IEnumerable<object> GlobalEntities;
 
-        public Level(IEnumerable<object> globalEntities)
+        private class LevelJson
+        {
+            public TileType[][] Tiles { get; set; }
+        }
+
+        public Level(IEnumerable<object> globalEntities, string fileName)
         {
             GlobalEntities = globalEntities;
 
+            string file = System.IO.File.ReadAllText(fileName);
+
             TileSize = new Vector2u(32, 32);
-            Tiles = new TileType[200, 200];
+            var levelJson = JsonSerializer.Deserialize<LevelJson>(file);
+
+            Tiles = new TileType[levelJson.Tiles.Length, levelJson.Tiles[0].Length];
 
             uint TileLength0 = (uint)Tiles.GetLength(0);
             uint TileLength1 = (uint)Tiles.GetLength(1);
@@ -38,15 +48,7 @@ namespace Gravity
             {
                 for (uint j = 0; j < TileLength1; j++)
                 {
-                    if (i == 0 || i == (TileLength0 - 1) ||
-                        j == 0 || j == (TileLength1 - 1))
-                    {
-                        Tiles[i, j] = TileType.Wall;
-                    }
-                    else
-                    {
-                        Tiles[i, j] = TileType.Air;
-                    }
+                    Tiles[i, j] = levelJson.Tiles[i][j];
                 }
             }
 
